@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<html lang="ko">
+<head>
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Catamaran:800&display=swap" rel="stylesheet">
+	<style>
+	.m-header {
+		font-size: 70px;
+		text-align: center;
+		margin-top: 50px;
+		font-family: 'Catamaran', sans-serif;
+	}
+</style>
+</head>
+<body>
+
+<div class="jumbotron">
+	<div classs='container'>
+		<h1 class="display-4" style="font-family: 'Do Hyeon', sans-serif;">빠르게 듀오를 찾아보세요</h1>
+		<p class="lead">게시글작성부터 전적검색까지 한번에!</p>
+		<hr class="my-4">
+		<p>쉽고 빠르게 게시글을 작성하고 듀오를 찾아보세요. 게시글을 보며 게시자의 승률과 최근 3판의 전적을 볼 수 있습니다.</p>
+	</div>
+</div>
+
+<h1 class="m-header">Quick Search</h1>
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="get" name="search_form" action="{% url 'score:search_result' %}" >
+                    <div class="input-group input-group-lg mb-3 mt-5 mx-auto" id="serch-bar">
+                      <input type="text" class="form-control rounded-pill" placeholder="소환사의 이름을 입력하세요" name="search_text"  value="{{search_text}}">
+                     <span class="input-group-btn">
+                          <button class="btn btn-secondary" type="submit">검색</button>
+                    </span>
+                      </div>
+                  </form>
+            </div>
+        </div>
+    </div><br><br>
+
+
+{% endblock %}
+</body>
+
+</html>

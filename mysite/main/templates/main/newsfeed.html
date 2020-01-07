@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<head>
+</head>
+<body>
+<div class="container">
+	{% load staticfiles %}
+    {% for feed in articles reversed %}
+    <div class="feed border">
+		<br>
+        <h2 class="title">{{ feed.title }}</h2>
+		<div class="date">{{ feed.created_at }}</div>
+		{% load staticfiles %}
+		<div><a href="/newsfeed/{{ feed.pk }}/remove" data-toggle="tooltip" data-placement="right"  title="게시글 삭제"><img src= "{% static 'del.png' %}" height="16px"></a></div>
+        <p>-----------------------------------</p>
+        <a class="name">{{ feed.nick_name }}</a>
+        <p class="content">{{ feed.content }}</p><br><br>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+
+
+<style>
+    .date {
+        color: #999;
+        margin-bottom: 10px;
+    }
+    .title {
+        color: #6184dddd;
+        font-weight: 600;
+    }
+    .content {
+        margin-top: 5px;
+    }
+</style>

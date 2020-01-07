@@ -1,0 +1,11 @@
+
+*.pyc
+test.py
+build/*
+docs/*
+dist/*
+*.yaml
+*.cfg
+.pypirc
+*.ipynb*
+*egg*

@@ -1,0 +1,219 @@
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	{% load static %}
+	<link rel="icon" href="{% static 'images/fdf.ico' %}">
+	<title>FDF.GG{% block title %}{% endblock %}</title>
+</head>
+	
+
+<body>
+
+	<header class="header">
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="#" style="font-family: 'Do Hyeon', sans-serif;">FDF.GG </a>
+			<button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon custom-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor01">
+	<ul class="navbar-nav mr-auto navbar-dark">
+		<li class="nav-item active">
+			<a class="nav-link" href="/"> Home
+				<span class="sr-only">(current)</span>
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="https://cse2019.run.goorm.io/newsfeed/">듀오게시판</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="https://cse2019.run.goorm.io/post/">게시글 올리기</a>
+	</ul>
+	<form method="get" name="search_form" action="{% url 'score:search_result' %}">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="소환사명" name="search_text" value="{{search_text}}">
+			<span class="input-group-btn">
+				<button class="btn btn-secondary" type="submit">검색</button>
+			</span>
+		</div>
+	</form>
+</div>
+		</nav>
+	</header>
+	{% block content %} {% endblock %}
+
+	<footer class="footer fixed-bottom">
+		<p><b> &copy;2019 Hyunu. <br>Powered By Django 2</b></p>
+		<br>
+	</footer>
+
+</body>
+<style>
+	
+.custom-toggler-icon {
+	border-color: #000000;
+}
+.custom-toggler {
+	border-color: #000000;
+}
+
+.footer {
+	background-color: #78c1ad;
+
+	bottom:0;
+	width:100%;
+	height:70px; 	
+}
+
+.navbar {
+	background-color: #78c1ad;
+}
+
+.navbar .navbar-brand {
+	color: #ecf0f1;
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+	color: #ffbbbc;
+}
+
+.navbar .navbar-text {
+	color: #ecf0f1;
+}
+	.navbar .navbar-text a {
+		color: #ffbbbc;
+	}
+
+	.navbar .navbar-text a:hover,
+	.navbar .navbar-text a:focus {
+		color: #ffbbbc;
+	}
+
+	.navbar .navbar-nav .nav-link {
+		color: #ecf0f1;
+		border-radius: .25rem;
+		margin: 0 0.25em;
+	}
+
+	.navbar .navbar-nav .nav-link:not(.disabled):hover,
+	.navbar .navbar-nav .nav-link:not(.disabled):focus {
+		color: #ffbbbc;
+	}
+
+	.navbar .navbar-nav .nav-item.active .nav-link,
+	.navbar .navbar-nav .nav-item.active .nav-link:hover,
+	.navbar .navbar-nav .nav-item.active .nav-link:focus,
+	.navbar .navbar-nav .nav-item.show .nav-link,
+	.navbar .navbar-nav .nav-item.show .nav-link:hover,
+	.navbar .navbar-nav .nav-item.show .nav-link:focus {
+		color: #ffbbbc;
+		background-color: #78c1ad;
+	}
+
+	.navbar .navbar-toggle {
+		border-color: #78c1ad;
+	}
+
+	.navbar .navbar-toggle:hover,
+	.navbar .navbar-toggle:focus {
+		background-color: #78c1ad;
+	}
+
+	.navbar .navbar-toggle .navbar-toggler-icon {
+		color: #000000;
+	}
+
+	.navbar .navbar-collapse,
+	.navbar .navbar-form {
+		border-color: #ecf0f1;
+	}
+
+	.navbar .navbar-link {
+		color: #ecf0f1;
+	}
+
+	.navbar .navbar-link:hover {
+		color: #ffbbbc;
+	}
+
+	@media (max-width: 575px) {
+		.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+			color: #ecf0f1;
+		}
+		.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+		.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+			color: #ffbbbc;
+		}
+		.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+			color: #ffbbbc;
+			background-color: #78c1ad;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+			color: #ecf0f1;
+		}
+		.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+		.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+			color: #ffbbbc;
+		}
+		.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+			color: #ffbbbc;
+			background-color: #78c1ad;
+		}
+	}
+
+	@media (max-width: 991px) {
+		.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+			color: #ecf0f1;
+		}
+		.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+		.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+			color: #ffbbbc;
+		}
+		.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+			color: #ffbbbc;
+			background-color: #78c1ad;
+		}
+	}
+
+	@media (max-width: 1199px) {
+		.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+			color: #ecf0f1;
+		}
+		.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+		.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+			color: #ffbbbc;
+		}
+		.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+			color: #ffbbbc;
+			background-color: #78c1ad;
+		}
+	}
+
+	.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+		color: #ecf0f1;
+	}
+
+	.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+	.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+		color: #ffbbbc;
+	}
+
+	.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+		color: #ffbbbc;
+		background-color: #78c1ad;
+	}
+</style>
+</html>
