@@ -32,7 +32,7 @@ def search_result(request):
 		params = {'api_key': api_key}
 		res = requests.get(summoner_url, params=params)
 		
-		if res.status_code == requests.codes.ok:                #결과값이 정상적으로 반환되었을때만 실행하도록 설정
+		if res.status_code == requests.codes.ok:               
 			summoner_exist = True
 			summoners_result = res.json()                        #response result change to json
 			if summoners_result:
