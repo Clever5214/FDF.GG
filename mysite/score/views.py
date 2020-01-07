@@ -3,7 +3,7 @@ from static_data import ddragon
 dd = ddragon.ddragon()
 import requests, json
  
-#League of Legends 전적검색
+#League of Legends searching
 def score_view(request):
 	return render(request, 'score/score_view.html')
 
@@ -34,7 +34,7 @@ def search_result(request):
 		
 		if res.status_code == requests.codes.ok:                #결과값이 정상적으로 반환되었을때만 실행하도록 설정
 			summoner_exist = True
-			summoners_result = res.json()                        #response 값을 json 형태로 변환시키는 함수
+			summoners_result = res.json()                        #response result change to json
 			if summoners_result:
 				sum_result['name'] = summoners_result['name']
 				sum_result['level'] = summoners_result['summonerLevel']
@@ -49,7 +49,7 @@ def search_result(request):
 					if solo['queueType'] == 'RANKED_SOLO_5x5':
 						break;
 
-				solo_tier['rank_type'] = '솔로랭크 5:5'
+				solo_tier['rank_type'] = 'solo 5:5'
 				solo_tier['tier'] = solo['tier']
 				solo_tier['rank'] = str(solo['rank'])
 				solo_tier['points'] = str(solo['leaguePoints'])
@@ -64,11 +64,10 @@ def search_result(request):
 			match = requests.get(match_url)
 			match_data = match.json()
 			
-			history = match_data["matches"] # 나의 게임기록
-			first = history[0]  #기록 중에  첫번째
+			history = match_data["matches"] # my game history
+			first = history[0]  #fisrt of it
 			
-			gameID_1 = first['gameId']  #그 게임의 gameId
-
+			gameID_1 = first['gameId']  #the game ID
 			match_data = "https://kr.api.riotgames.com/lol/match/v4/matches/" + str(gameID_1) + "?api_key=" + api_key #gameId로 검색
 			match_data1 = requests.get(match_data)
 			match_data2 = match_data1.json()
@@ -78,15 +77,15 @@ def search_result(request):
 			for summoner in match_data3:
 				if summoner['player']['summonerName'] == nick_name:
 					break;
-			participantId = summoner['participantId'] #닉네임으로 게임 참가번호 검색
+			participantId = summoner['participantId'] #searching if nick_name
 
 			for my_history in participants:
-				if my_history['participantId'] == participantId: # 참가번호로 그 게임내 데이터 출력
+				if my_history['participantId'] == participantId: # get gamedata with participantID
 					break;
 					
 				
 					
-			championId1 = my_history['championId'] # 원하는 JSON값을 변수에 저장
+			championId1 = my_history['championId'] 
 			spell1_1 = my_history['spell1Id']
 			spell1_2 = my_history['spell2Id']
 		
@@ -96,7 +95,7 @@ def search_result(request):
 			
 			stat = my_history['stats']
 			result_game = stat['win']
-			if result_game == True:   #win값이 True면 win 아니면 loose
+			if result_game == True:   #rue is win, false is lose
 				result1 = "Win!"
 			else:
 				result1 = "Lose"
@@ -126,14 +125,13 @@ def search_result(request):
 			for summoner in match_data3:
 				if summoner['player']['summonerName'] == nick_name:
 					break;
-			participantId = summoner['participantId'] #닉네임으로 게임 참가번호 검색
-
+			participantId = summoner['participantId'] 
 			for my_history in participants:
-				if my_history['participantId'] == participantId: # 참가번호로 그 게임내 데이터 출력
+				if my_history['participantId'] == participantId: 
 					break;
 					
 									
-			championId2 = my_history['championId'] # 원하는 JSON값을 변수에 저장
+			championId2 = my_history['championId'] 
 			spell2_1 = my_history['spell1Id']
 			spell2_2 = my_history['spell2Id']
 			
@@ -142,7 +140,7 @@ def search_result(request):
 			
 			stat = my_history['stats']
 			result_game = stat['win']
-			if result_game == True:   #win값이 True면 win 아니면 loose
+			if result_game == True:  
 				result2 = "Win!"
 			else:
 				result2 = "Lose"
@@ -160,7 +158,7 @@ def search_result(request):
 									
 	
 			third = history[2]
-			gameID_3 = third['gameId']  #그 게임의 gameId
+			gameID_3 = third['gameId'] 
 
 			match_data = "https://kr.api.riotgames.com/lol/match/v4/matches/" + str(gameID_3) + "?api_key=" + api_key #gameId로 검색
 			match_data1 = requests.get(match_data)
@@ -171,14 +169,13 @@ def search_result(request):
 			for summoner in match_data3:
 				if summoner['player']['summonerName'] == nick_name:
 					break;
-			participantId = summoner['participantId'] #닉네임으로 게임 참가번호 검색
-
+			participantId = summoner['participantId'] 
 			for my_history in participants:
-				if my_history['participantId'] == participantId: # 참가번호로 그 게임내 데이터 출력
+				if my_history['participantId'] == participantId:
 					break;
 					
 									
-			championId3 = my_history['championId'] # 원하는 JSON값을 변수에 저장
+			championId3 = my_history['championId'] 
 			spell3_1 = my_history['spell1Id']
 			spell3_2 = my_history['spell2Id']
 			
@@ -187,7 +184,7 @@ def search_result(request):
 			
 			stat = my_history['stats']
 			result_game = stat['win']
-			if result_game == True:   #win값이 True면 win 아니면 loose
+			if result_game == True:  
 				result2 = "Win!"
 			else:
 				result2 = "Lose"
@@ -205,4 +202,4 @@ def search_result(request):
 			nick_name = str(summoner_name)
 			
 		return render (request, 'score/search_result.html', {'summoner_exist': summoner_exist, 'summoners_result': sum_result, 'solo_tier': solo_tier, 'history_1' : history_1, 'history_2' : history_2, 'history_3' : history_3})
-
+#return to the html template
