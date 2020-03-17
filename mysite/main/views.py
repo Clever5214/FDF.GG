@@ -3,7 +3,7 @@ from main.models import match
 
 #메인 페이지
 def index(request):
-    return render(request, 'main/index.html')
+	return render(request, 'main/index.html')
 
 
 #게시글 작성

@@ -6,4 +6,5 @@ app_name = 'score'    #score 어플리케이션의 url 호출시 앞의 구분�
 urlpatterns = [
     path('score_view/', views.score_view, name='score_view'),            #검색창 메인 화면
     path('search_result', views.search_result, name='search_result'),    #검색결과를 보여줄 화면
+	path('more', views.more, name='more'),
 ]

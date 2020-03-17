@@ -3,91 +3,86 @@
 
 {% load static %}
 <html>
+
 <head>
 </head>
 <title>전적검색</title>
+
 <body>
-	{% if summoner_exist %}
-	<div class="row border" style="margin: 40px; float: none;">
-
-		<img style="display: block; margin: 0px; width:200; height:200;" class="img-thumbnail" src="http://ddragon.leagueoflegends.com/cdn/9.23.1/img/profileicon/{{summoners_result.profileIconId}}.png">
-		<span style="margin: 20 0 0 20; font-size: 32px;">{{ summoners_result.name }}
-			<br>
-			<span style="font-size: 20px; ">LV: {{ summoners_result.level }}</span>
-		</span>
-
-	</div>
-	<div class="row">
-		<div style="float: none; margin: 0 auto" class="col-5 border border-secondary">
-			<div class="row">
-				{% if solo_tier %}
-				<div class="col-4">
-					<img style="width:150; height:162;"src="{% static 'images/emblems/Emblem_/' %}{{solo_tier.tier}}.gif" width="100%">
+	<div class='mx-auto'>
+		<div class='grid grid-cols-3'>
+			<div class="col-span-1 mx-auto p-6 ml-8 mt-4">
+				<div id='nick_name' class='font-bold text-3xl' >
+					{{ sum_result.name }}
 				</div>
-				<div>
-					{{nick_name}}
-					리그: {{ solo_tier.rank_type }}
-					<br> 티어: {{ solo_tier.tier }} {{ solo_tier.rank }}
-					<br> 포인트: {{ solo_tier.points }}
-					<br> 전적: {{ solo_tier.wins|add:solo_tier.losses}}전 {{ solo_tier.wins }}승 {{ solo_tier.losses }}패
+				<br>
+				<div id='tier' class='ml-2'>
+					<div id='solo_tier'>
+						<strong>Solo</strong>
+					</div>
+					<br>
+					<div id='flex_tier'>
+						<strong>KAL_TOT {{ sum_result.kal_total }} </strong>
+					</div>
 				</div>
 			</div>
-			{% else %}
-			<div>
-				배치 전적정보없음
-			</div>
-			{% endif %}
-		</div>
+			<div class="col-span-2">
+				<div class="container p-6">
+					{% for key,value in kal_data.items %}
+					<div id = "{{ key }}_main"class="border-solid border-4 rounded grid grid-cols-4 w-2/3">
+						<div>
+							<img class="h-20 w-20 rounded" src="{{ value.champid }}">
+						</div>
+						<div class="">
+							{{ value.kill }} / {{ value.death }} / {{ value.assist }}
+						</div>
+						<div>
+							<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
+							<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
+						</div>
+						<div>
+						
+							<button onclick='itembar_0("{{ key }}")'> sort me</button>
+						
+						</div>
+						<div id="{{ key }}" class="row border" style="display: none">
+							<div>
+								<p>hello</p>
+								<p>hello</p>
+								<p>hello</p>
+							</div>
+							<div class="w-100"></div>
+							<!--TAB the line-->
+						</div>
+						<script>
+							
+							var bg = '{{ value.win }}'
+							var box = document.getElementById("{{key}}_main");
+							if ( bg == 'False'){
+								box.style.backgroundColor = "FF787E";
+								}else{
+								box.style.backgroundColor = "78CDFF";
+								};
+								
+							function itembar_0(bar2) {
+								var tempt = document.getElementById(bar2);
+								if (tempt.style.display === 'none') {
+									tempt.style.display = 'block'
+								} else {
+									tempt.style.display = 'none'
+								}
+							}
 
+						</script>
+					</div>
+
+					<br> {% endfor %}
+
+				</div>
+
+			</div>
+		</div>
 	</div>
-	<strong>{% else %} 사용자가 존재하지않습니다. {% endif %}</strong>
-
-	<div class="container">
-		<br>
-		<div class="row border">
-			<div class="col-sm">
-				<img src="{{history_1.champion_img}}">
-			</div>
-			<div class="col-sm">
-				Kill: {{history_1.kill}} Death: {{history_1.death}} Assist: {{history_1.assist}}
-				<br><strong>{{history_1.result}}</strong>
-			</div>
-			<div class="col-sm">
-				<img src="{{history_1.spell1Id}}">
-				<img src="{{history_1.spell2Id}}">
-			</div>
-			<br>
-		</div>
-		<div class="row border">
-			<div class="col-sm">
-				<img src="{{history_2.champion_img}}">
-			</div>
-			<div class="col-sm">
-				Kill: {{history_2.kill}} Death: {{history_2.death}} Assist: {{history_2.assist}}
-				<br><strong>{{history_2.result}}</strong>
-			</div>
-			<div class="col-sm">
-				<img src="{{history_2.spell1Id}}">
-				<img src="{{history_2.spell2Id}}">
-			</div>
-		</div>
-		<div class="row border">
-			<div class="col-sm">
-				<img src="{{history_3.champion_img}}">
-			</div>
-			<div class="col-sm">
-				Kill: {{history_3.kill}} Death: {{history_3.death}} Assist: {{history_3.assist}}
-				<br><strong>{{history_3.result}}</strong>
-			</div>
-			<div class="col-sm">
-				<img src="{{history_3.spell1Id}}">
-				<img src="{{history_3.spell2Id}}">
-			</div>
-		</div>
-		<br><br>
-
-	</div>
-
 	{% endblock %}
 </body>
 

@@ -3,23 +3,29 @@
 {% block content %}
 <head>
 </head>
+
 <body>
-<div class="container">
-	{% load staticfiles %}
-    {% for feed in articles reversed %}
-    <div class="feed border">
-		<br>
-        <h2 class="title">{{ feed.title }}</h2>
-		<div class="date">{{ feed.created_at }}</div>
-		{% load staticfiles %}
-		<div><a href="/newsfeed/{{ feed.pk }}/remove" data-toggle="tooltip" data-placement="right"  title="게시글 삭제"><img src= "{% static 'del.png' %}" height="16px"></a></div>
-        <p>-----------------------------------</p>
-        <a class="name">{{ feed.nick_name }}</a>
-        <p class="content">{{ feed.content }}</p><br><br>
-    </div>
-    {% endfor %}
-</div>
-{% endblock %}
+	<div class="container border mx-auto w-4/5">
+		{% load staticfiles %} 
+		{% for feed in articles reversed %}
+		<div class="mx-auto border border-gray-700 rounded-lg m-2 w-1/2">
+			<br>
+			<h2 class="title font-bold">{{ feed.title }}</h2>
+			<div class="date">{{ feed.created_at }}</div>
+			{% load staticfiles %}
+			<div>
+				<a href="/newsfeed/{{ feed.pk }}/remove" data-toggle="tooltip" data-placement="right" title="게시글 삭제">
+					<img src="{% static 'del.png' %}" class="w-4">
+				</a>
+			</div>
+			<p>-----------------------------------</p>
+			<a class="name">{{ feed.nick_name }}</a>
+			<p class="content">{{ feed.content }}</p>
+			<br>
+		</div>
+		{% endfor %}
+	</div>
+	{% endblock %}
 </body>
 
 

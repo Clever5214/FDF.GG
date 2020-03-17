@@ -1,0 +1,119 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+{% load static %}
+<html>
+<head>
+</head>
+<title>전적검색</title>
+<body>
+	{% if summoner_exist %}
+	<div class="row border" style="margin: 40px; float: none;">
+
+		<img style="display: block; margin: 0px; width:200; height:200;" class="img-thumbnail" src="http://ddragon.leagueoflegends.com/cdn/10.3.1/img/profileicon/{{summoners_result.profileIconId}}.png">
+		<span style="margin: 20 0 0 20; font-size: 32px;">{{ summoners_result.name }}
+			<br>
+			<span style="font-size: 20px; ">LV: {{ summoners_result.level }}</span>
+		</span>
+    </div>
+	
+	<div class="row">
+		<div style="float: none; margin: 0 auto" class="col-5 border border-secondary">
+			<div class="row">
+				{% if solo_tier %}
+				<div class="col-4">
+					<img style="width:150; height:162;"src="{% static 'images/emblems/Emblem_/' %}{{solo_tier.tier}}.gif" width="100%">
+				</div>
+				<div>
+					{{nick_name}}
+					리그: {{ solo_tier.rank_type }}
+					<br> 티어: {{ solo_tier.tier }} {{ solo_tier.rank }}
+					<br> 포인트: {{ solo_tier.points }}
+					<br> 전적: {{ solo_tier.wins|add:solo_tier.losses}}전 {{ solo_tier.wins }}승 {{ solo_tier.losses }}패 {{ mastery_0.championId }}
+				</div>
+			</div>
+			{% else %}
+			<div>
+				배치 전적정보없음
+			</div>
+			{% endif %}
+		</div>
+
+	</div>
+	<strong>{% else %} 사용자가 존재하지않습니다. {% endif %}</strong>
+
+	<div class="container">
+		<br>
+		<div class="row border">
+			<div class="col-sm">
+				<img src="{{history_1.champion_img}}">
+				{{history_1.mode}}
+			</div>
+			<div class="col-sm">
+				Kill: {{history_1.kill}} Death: {{history_1.death}} Assist: {{history_1.assist}}
+				<br><strong>{{history_1.result}}</strong><br>
+			</div>
+			<div class="col-sm">
+				<img src="{{history_1.spell1Id}}">
+				<img src="{{history_1.spell2Id}}">
+				<button onclick='itembar_0()'>
+					CLICK ME
+				</button>
+			</div>
+			<br>
+		</div>
+		    <div id="item0" class="container row border" style="display: none">
+				<div>
+					<img src="{{history_1.item0}}">
+					<img src="{{history_1.item1}}">
+					<img src="{{history_1.item2}}">
+					<img src="{{history_1.item3}}">
+					<img src="{{history_1.item4}}">
+					<img src="{{history_1.item5}}">
+				</div>
+				<div class="w-100"></div> <!--TAB the line-->
+				
+			</div>
+		<script>
+				function itembar_0(){
+					var tempt = document.getElementById('item0');
+					if (tempt.style.display === 'none'){
+					tempt.style.display = 'block'}
+					else{
+					tempt.style.display='none'}
+			}
+		</script>
+		
+		<div class="row border">
+			<div class="col-sm">
+				<img src="{{history_2.champion_img}}">
+			</div>
+			<div class="col-sm">
+				Kill: {{history_2.kill}} Death: {{history_2.death}} Assist: {{history_2.assist}}
+				<br><strong>{{history_2.result}}</strong>
+			</div>
+			<div class="col-sm">
+				<img src="{{history_2.spell1Id}}">
+				<img src="{{history_2.spell2Id}}">
+			</div>
+		</div>
+		<div class="row border">
+			<div class="col-sm">
+				<img src="{{history_3.champion_img}}">
+			</div>
+			<div class="col-sm">
+				Kill: {{history_3.kill}} Death: {{history_3.death}} Assist: {{history_3.assist}}
+				<br><strong>{{history_3.result}}</strong>
+			</div>
+			<div class="col-sm">
+				<img src="{{history_3.spell1Id}}">
+				<img src="{{history_3.spell2Id}}">
+			</div>
+		</div>
+		<br><br>
+
+	</div>
+
+	{% endblock %}
+</body>
+</html>
