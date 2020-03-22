@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from static_data import ddragon
 import requests, json
 dd = ddragon.ddragon()
@@ -12,14 +14,12 @@ def search_result(request):
 	if request.method == "GET":
 		summoner_name = request.GET.get('search_text')
 		
-		api_key = 'RGAPI-9260f770-eba1-443a-9b5a-5f7fdee52752' #Type your API KEY here
+		api_key = 'RGAPI-6f7bf390-2f41-4881-ae0c-72e69872fe99' #Type your API KEY here
 		summoner_exist = False
 		kal_data = {}
 		sum_result = {}
-		store_list = []
 		
 		
-		nick_name = str(summoner_name)
 		summoner_url = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + str(summoner_name)
 		api_id = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + str(summoner_name) + '?api_key=' + api_key #닉네임으로 개인키검색
 		r = requests.get(api_id)
@@ -39,8 +39,8 @@ def search_result(request):
 			sum_result['kal_total'] = kal_json['totalGames']
 			
 			for i in range(5):  #one loop, one game
-				tempt = kal_json['matches'][i]['gameId']
-				d = {i:{'game_list' : tempt}}
+				game_id = kal_json['matches'][i]['gameId']
+				d = {i:{'game_list' : game_id}}
 				kal_data.update(d)
 				game_url = "https://kr.api.riotgames.com/lol/match/v4/matches/" + str(kal_data[i]['game_list']) + "?api_key=" + api_key
 				game_tempt = requests.get(game_url)
@@ -57,6 +57,7 @@ def search_result(request):
 						break;
 						
 				detail = stat['stats']
+				kal_data[i]['game_id'] = game_id
 				kal_data[i]['champid'] = str(dd.getChampion(stat['championId']).image)
 				kal_data[i]['spell_1'] = str(dd.getSummoner(stat['spell1Id']).image)
 				kal_data[i]['spell_2'] = str(dd.getSummoner(stat['spell2Id']).image)
@@ -66,13 +67,17 @@ def search_result(request):
 				kal_data[i]['win'] = detail['win']
 				
 				
-		return render (request, 'score/search_result.html', {'sum_result': sum_result, 'kal_data' : kal_data})
+		return render (request, 'score/search_result.html', {'sum_result': sum_result, 'kal_data' : kal_data});
+
+
 	
 	else:
-		print('error')
+		return render(request, 'score/more.html')
 
-		
+@csrf_exempt		
 def more(request):
-	if request.GET.get('sort-btn'):
-		return render(request, 'score/error.html')
+	a = request.GET['tempt1444']
+
+	return render(request, 'score/more.html', {'a' : a});
+	return HttpResponse()
 

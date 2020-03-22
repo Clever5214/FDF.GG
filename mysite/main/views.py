@@ -26,7 +26,7 @@ def newsfeed(request):
 	return render(request, 'main/newsfeed.html', {'articles': articles })
 
 
-#게시글 삭제
+#Delete Post
 def remove(request, pk):
 	article = match.objects.get(pk=pk)
 	

@@ -5,6 +5,7 @@
 <html>
 
 <head>
+
 </head>
 <title>전적검색</title>
 
@@ -12,7 +13,7 @@
 	<div class='mx-auto'>
 		<div class='grid grid-cols-3'>
 			<div class="col-span-1 mx-auto p-6 ml-8 mt-4">
-				<div id='nick_name' class='font-bold text-3xl' >
+				<div id='nick_name' class='font-bold text-3xl'>
 					{{ sum_result.name }}
 				</div>
 				<br>
@@ -29,11 +30,11 @@
 			<div class="col-span-2">
 				<div class="container p-6">
 					{% for key,value in kal_data.items %}
-					<div id = "{{ key }}_main"class="border-solid border-4 rounded grid grid-cols-4 w-2/3">
+					<div id="{{ key }}_main" class="border-solid border-4 rounded grid grid-cols-4 w-2/3">
 						<div>
 							<img class="h-20 w-20 rounded" src="{{ value.champid }}">
 						</div>
-						<div class="">
+						<div class="my-auto">
 							{{ value.kill }} / {{ value.death }} / {{ value.assist }}
 						</div>
 						<div>
@@ -41,31 +42,61 @@
 							<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
 						</div>
 						<div>
-						
-							<button onclick='itembar_0("{{ key }}")'> sort me</button>
-						
+
+							<button onclick='itembar_0("{{ key }}")' id='{{ key }}_execute' value='execute'> sort
+								me</button>
+
 						</div>
-						<div id="{{ key }}" class="row border" style="display: none">
+						<div id="{{ key }}_more" class="row border" style="display: none">
 							<div>
 								<p>hello</p>
 								<p>hello</p>
 								<p>hello</p>
 							</div>
-							<div class="w-100"></div>
-							<!--TAB the line-->
 						</div>
-						<script>
-							
+						
+						<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+
+							$('#{{ key }}_more').click(function () 
+							{ 
+								var search_key = $('{{key}}').val() 
+								$.ajax({ 
+									url: 'search/', 
+									data: { 'search_key': search_key }, 
+									success: function (data) 
+									{ $('#data_table').html(data) } 
+								}) 
+								})
+
+
+
+							document.getElementById('{{ key }}_execute').addEventListener('click', function (event) {
+								var xhr = new XMLHttpRequest();
+
+								xhr.open('POST', './more');
+								xhr.onreadystatechange = function () {
+									if (xhr.readyState === 4 && xhr.status === 200) {
+										document.getElementById('{{ key }}_more').innerHTML = xhr.responseText;
+									}
+								}
+
+								var game_id;
+								tempt1444 = '{{game_id}}';
+								xhr.send(tempt1444);
+							});
+
+
 							var bg = '{{ value.win }}'
 							var box = document.getElementById("{{key}}_main");
-							if ( bg == 'False'){
+							if (bg == 'False') {
 								box.style.backgroundColor = "FF787E";
-								}else{
+							} else {
 								box.style.backgroundColor = "78CDFF";
-								};
-								
+							};
+
+
 							function itembar_0(bar2) {
-								var tempt = document.getElementById(bar2);
+								var tempt = document.getElementById(bar2 + '_more');
 								if (tempt.style.display === 'none') {
 									tempt.style.display = 'block'
 								} else {
