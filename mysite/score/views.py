@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
 from static_data import ddragon
+
 import requests, json
+
 dd = ddragon.ddragon()
  
 #League of Legends 전적검색
@@ -14,7 +15,7 @@ def search_result(request):
 	if request.method == "GET":
 		summoner_name = request.GET.get('search_text')
 		
-		api_key = 'RGAPI-6f7bf390-2f41-4881-ae0c-72e69872fe99' #Type your API KEY here
+		api_key = 'RGAPI-2b5a02d1-b60f-413c-9bae-353069cb51ab' #Type your API KEY here
 		summoner_exist = False
 		kal_data = {}
 		sum_result = {}
@@ -74,10 +75,15 @@ def search_result(request):
 	else:
 		return render(request, 'score/more.html')
 
-@csrf_exempt		
+@csrf_exempt #about serurity 
 def more(request):
-	a = request.GET['tempt1444']
+	if request.method == 'POST':
+		adfd = request.POST.get('data')
 
-	return render(request, 'score/more.html', {'a' : a});
-	return HttpResponse()
+		return render(request, 'score/more.html', {'a' : adfd});
+
+	else:
+		a = "False!"
+		return render(request, 'score/more.html', {'a' : a});
+		
 

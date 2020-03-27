@@ -43,47 +43,36 @@
 						</div>
 						<div>
 
-							<button onclick='itembar_0("{{ key }}")' id='{{ key }}_execute' value='execute'> sort
-								me</button>
+							<button onclick='itembar_0("{{ key }}")' id='{{ key }}_execute' value='execute'>
+								click ass
+							</button>
+
 
 						</div>
-						<div id="{{ key }}_more" class="row border" style="display: none">
+						<div id="{{ key }}_more" style="display: none">
 							<div>
 								<p>hello</p>
 								<p>hello</p>
 								<p>hello</p>
 							</div>
 						</div>
-						
-						<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
 
-							$('#{{ key }}_more').click(function () 
-							{ 
-								var search_key = $('{{key}}').val() 
-								$.ajax({ 
-									url: 'search/', 
-									data: { 'search_key': search_key }, 
-									success: function (data) 
-									{ $('#data_table').html(data) } 
-								}) 
-								})
-
-
-
+						<script>
 							document.getElementById('{{ key }}_execute').addEventListener('click', function (event) {
 								var xhr = new XMLHttpRequest();
 
-								xhr.open('POST', './more');
+								xhr.open('POST', './more', true);
 								xhr.onreadystatechange = function () {
 									if (xhr.readyState === 4 && xhr.status === 200) {
 										document.getElementById('{{ key }}_more').innerHTML = xhr.responseText;
 									}
 								}
-
-								var game_id;
-								tempt1444 = '{{game_id}}';
-								xhr.send(tempt1444);
+								xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+								var data = 'ass';
+								xhr.send(data);
 							});
+
+
 
 
 							var bg = '{{ value.win }}'
@@ -107,7 +96,7 @@
 						</script>
 					</div>
 
-					<br> {% endfor %}
+					{% endfor %}
 
 				</div>
 

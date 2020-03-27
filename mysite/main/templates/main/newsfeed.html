@@ -5,13 +5,13 @@
 </head>
 
 <body>
-	<div class="container border mx-auto w-4/5">
+	<div class="container bg-gray-200 border mx-auto w-4/5">
 		<div class='flex flex-row-reverse'>
 			<button class='bg-gray-400 m-3 p-2 rounded-lg' href='#'>글 쓰기</button>
 		</div>
 		{% load staticfiles %} 
 		{% for feed in articles reversed %}
-		<div class="mx-auto border border-gray-700 rounded-lg m-2 p-1 w-1/2">
+		<div class="mx-auto border border-gray-700 rounded-lg m-3 p-1 w-1/2">
 			<h2 class="title font-bold">{{ feed.title }}</h2>
 			<div class="date">{{ feed.created_at }}</div>
 			{% load staticfiles %}
