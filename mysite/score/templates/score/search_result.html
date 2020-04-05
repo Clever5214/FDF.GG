@@ -47,17 +47,12 @@
 								click ass
 							</button>
 
-
 						</div>
 						<div id="{{ key }}_more" style="display: none">
-							<div>
-								<p>hello</p>
-								<p>hello</p>
-								<p>hello</p>
-							</div>
 						</div>
 
 						<script>
+
 							document.getElementById('{{ key }}_execute').addEventListener('click', function (event) {
 								var xhr = new XMLHttpRequest();
 
@@ -67,9 +62,10 @@
 										document.getElementById('{{ key }}_more').innerHTML = xhr.responseText;
 									}
 								}
+
 								xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-								var data = 'ass';
-								xhr.send(data);
+								var diss = 'ass';
+								xhr.send(diss);
 							});
 
 

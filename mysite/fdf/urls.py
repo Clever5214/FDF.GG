@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from main.views import index, newsfeed, new_feed, remove
-from score.views import score_view, search_result
+from score.views import score_view, search_result, more
 
 urlpatterns = [
     path('', index), #메인 페이지
@@ -14,5 +14,6 @@ urlpatterns = [
 	path('score/', include('score.urls')), #score url 추가
 	path('score_view/', score_view),       #검색창 메인 화면
     path('search_result', search_result),  #검색결과를 보여줄 화면
+    path('more', more)
 	
 ]
