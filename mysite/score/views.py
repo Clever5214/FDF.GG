@@ -41,8 +41,8 @@ def search_result(request):
 			
 			for i in range(5):  #one loop, one game
 				game_id = kal_json['matches'][i]['gameId']
-				d = {i:{'game_list' : game_id}}
-				kal_data.update(d)
+				list = {i:{'game_list' : game_id}}
+				kal_data.update(list)
 				game_url = "https://kr.api.riotgames.com/lol/match/v4/matches/" + str(kal_data[i]['game_list']) + "?api_key=" + api_key
 				game_tempt = requests.get(game_url)
 				game_json = game_tempt.json()
@@ -82,14 +82,23 @@ def more(request):
 		game_url = 'https://kr.api.riotgames.com/lol/match/v4/matches/' + gameId + '?api_key=' + api_key
 		game_tempt = requests.get(game_url)
 		game_json = game_tempt.json()
-		parti = game_json['participants']
+		participant = game_json['participants']
 
 		more_data = {}  #Dictonary of more_data
+		i=0
 
-		#for i in range(10):
-			#more_data[i]['champ_id']
+		for more in participant :
+			more_detail = more['stats']
+			list = {i:{'id' : more['participantId']}}
+			more_data.update(list)
+			more_data[i]['champid'] = more['championId']
+			more_data[i]['spell_1'] = str(dd.getSummoner(more['spell1Id']).image)
+			more_data[i]['spell_2'] = str(dd.getSummoner(more['spell2Id']).image)
+			more_data[i]['kill'] = more_detail['kills']
+			more_data[i]['death'] = more_detail['deaths']
+			more_data[i]['assist'] = more_detail['assists']
 
-		more_data = parti
+			i = i + 1
 		
 
 		return render(request, 'score/more.html', {'a' : more_data});
