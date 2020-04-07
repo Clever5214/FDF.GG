@@ -3,8 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from static_data import ddragon
 
 import requests, json
+dd = ddragon.ddragon() #Third party App
 
-dd = ddragon.ddragon()
+api_key = 'RGAPI-7449268d-9bdd-478f-93e0-9c23390b1983' #Type your API KEY here
  
 #League of Legends 전적검색
 def score_view(request):
@@ -14,10 +15,9 @@ def score_view(request):
 def search_result(request):
 	if request.method == "GET":
 		summoner_name = request.GET.get('search_text')
-		
-		api_key = 'RGAPI-c491e4c6-6154-4ab9-a88f-be8bf0f2a88c' #Type your API KEY here
+	
 		summoner_exist = False
-		kal_data = {}
+		kal_data = {}  #dictonary of summoner important data
 		sum_result = {}
 		
 		
@@ -78,10 +78,21 @@ def search_result(request):
 @csrf_exempt #about serurity 
 def more(request):
 	if request.method == 'POST':
-		ass = request.POST.get('diss', None)
+		gameId = request.POST.get('gameid', None)
+		game_url = 'https://kr.api.riotgames.com/lol/match/v4/matches/' + gameId + '?api_key=' + api_key
+		game_tempt = requests.get(game_url)
+		game_json = game_tempt.json()
+		parti = game_json['participants']
 
+		more_data = {}  #Dictonary of more_data
 
-		return render(request, 'score/more.html', {'a' : ass});
+		#for i in range(10):
+			#more_data[i]['champ_id']
+
+		more_data = parti
+		
+
+		return render(request, 'score/more.html', {'a' : more_data});
 
 	else:
 		a = "False!"

@@ -10,6 +10,7 @@
 <title>전적검색</title>
 
 <body>
+
 	<div class='mx-auto'>
 		<div class='grid grid-cols-3'>
 			<div class="col-span-1 mx-auto p-6 ml-8 mt-4">
@@ -35,23 +36,40 @@
 							<img class="h-20 w-20 rounded" src="{{ value.champid }}">
 						</div>
 						<div class="my-auto">
-							{{ value.kill }} / {{ value.death }} / {{ value.assist }}
+							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{ value.game_id}}
 						</div>
 						<div>
 							<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
 							<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
 						</div>
 						<div>
-
-							<button onclick='itembar_0("{{ key }}")' id='{{ key }}_execute' value='execute'>
-								click ass
+							<button  onclick='itembar_0("{{ key }}")' id='{{ key }}_execute'> 
+								feel like ass
 							</button>
-
 						</div>
+
 						<div id="{{ key }}_more" style="display: none">
+							<div style="display: none">
+								<form id="{{ key }}_id">
+									<input name="gameid" value="{{value.game_id}}">
+								</form>
+							</div>
 						</div>
 
+						<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 						<script>
+
+							$('#{{ key }}_execute').click(function () {
+								$.ajax({
+									url: './more',
+									type: 'post',
+									data: $('#{{ key }}_id').serialize(),
+									success: function (data) {
+										$('#{{ key }}_more').html(data);
+									}
+								})
+							})
+							/*
 
 							document.getElementById('{{ key }}_execute').addEventListener('click', function (event) {
 								var xhr = new XMLHttpRequest();
@@ -68,8 +86,7 @@
 								xhr.send(diss);
 							});
 
-
-
+*/
 
 							var bg = '{{ value.win }}'
 							var box = document.getElementById("{{key}}_main");
