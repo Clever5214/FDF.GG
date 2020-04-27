@@ -35,8 +35,8 @@
 						<div>
 							<img class="h-20 w-20 rounded" src="{{ value.champid }}">
 						</div>
-						<div class="my-auto">
-							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{ value.game_id}}
+						<div class="my-auto font-bold">
+							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{value.game_id}}
 						</div>
 						<div>
 							<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
@@ -82,7 +82,7 @@
 								}
 
 								xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-								var diss = 'ass';
+								var data = document.getElementById('#{{ key }}_id')
 								xhr.send(diss);
 							});
 

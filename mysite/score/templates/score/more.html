@@ -3,6 +3,28 @@
 
 <body>
 <h1>
-Test = {{ a }}
+
+//////
+
+{% for key,value in a.items %}
+<div class='grid grid-cols-20'>
+    <div id='champ_img'>
+        <img class="h-15 w-15 rounded" src="{{ value.champid }}">
+    </div>
+    <div id='kda'>
+        {{ value.kill }}/{{ value.death }}/{{value.assist}} 
+    </div>
+    <div id='item'>
+        {{ value.0 }} / {{ value.1 }} / {{ value.2}} / {{ value.3 }} / {{ value.4 }} {{ value.5 }} {{ value.6 }}
+    </div>
+    <div id='rune'>
+        {{ value.main_rune }} {{ value.sub_rune }}
+    </div>
+    <div>
+        {{ value.nick_name }}
+    </div>
+</div>
+
+{% endfor %}
 </h1>
 </body>

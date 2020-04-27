@@ -5,7 +5,7 @@ from static_data import ddragon
 import requests, json
 dd = ddragon.ddragon() #Third party App
 
-api_key = 'RGAPI-7449268d-9bdd-478f-93e0-9c23390b1983' #Type your API KEY here
+api_key = 'RGAPI-ea965008-59c2-487e-925b-3b21085eae7d' #Type your API KEY here
  
 #League of Legends 전적검색
 def score_view(request):
@@ -62,6 +62,7 @@ def search_result(request):
 				kal_data[i]['champid'] = str(dd.getChampion(stat['championId']).image)
 				kal_data[i]['spell_1'] = str(dd.getSummoner(stat['spell1Id']).image)
 				kal_data[i]['spell_2'] = str(dd.getSummoner(stat['spell2Id']).image)
+				kal_data[i]['champ_lev'] = detail['champLevel']
 				kal_data[i]['kill'] = detail['kills']
 				kal_data[i]['death'] = detail['deaths']
 				kal_data[i]['assist'] = detail['assists']
@@ -91,12 +92,19 @@ def more(request):
 			more_detail = more['stats']
 			list = {i:{'id' : more['participantId']}}
 			more_data.update(list)
-			more_data[i]['champid'] = more['championId']
+			more_data[i]['nick_name'] = game_json['participantIdentities'][i]['player']['summonerName']
+			more_data[i]['champid'] = str(dd.getChampion(more['championId']).image) 
 			more_data[i]['spell_1'] = str(dd.getSummoner(more['spell1Id']).image)
 			more_data[i]['spell_2'] = str(dd.getSummoner(more['spell2Id']).image)
 			more_data[i]['kill'] = more_detail['kills']
 			more_data[i]['death'] = more_detail['deaths']
 			more_data[i]['assist'] = more_detail['assists']
+			more_data[i]['main_rune'] = more_detail['perk0']
+			more_data[i]['sub_rune'] = more_detail['perkSubStyle']
+			
+			for j in range(6):
+				tempt_item = 'item' + str(j)
+				more_data[i][j] = more_detail[tempt_item]
 
 			i = i + 1
 		
