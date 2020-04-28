@@ -5,6 +5,20 @@
 <html>
 
 <head>
+	<style>
+		.score_main{
+			width: 650px;
+		}
+		.champ_img{
+			width: 80px;
+			height: 80px;
+
+		}
+		.spell{
+			width: 40px;
+			height: 40px;
+		}
+	</style>
 
 </head>
 <title>전적검색</title>
@@ -28,25 +42,35 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-span-2">
+			<div class="col-span-2 w">
 				<div class="container p-6">
 					{% for key,value in kal_data.items %}
-					<div id="{{ key }}_main" class="border-solid border-4 rounded grid grid-cols-4 w-2/3">
+					<div id="{{ key }}_main" class="score_main border-4 rounded-lg grid grid-cols-4">
+						<div class="grid grid-cols-2">
+							<img class="champ_img rounded-lg" src="{{ value.champid }}">
+							<div class="grid grid-cols-2">
+								<div>
+									<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
+									<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
+								</div> 
+								<div>
+									<img class="h-10 w-10 rounded" src="">
+									<img class="h-10 w-10 rounded" src="{{ value.sub_rune }}">
+								</div>
+							</div>
+						</div>
 						<div>
-							<img class="h-20 w-20 rounded" src="{{ value.champid }}">
+							
 						</div>
 						<div class="my-auto font-bold">
-							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{value.game_id}}
-						</div>
-						<div>
-							<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
-							<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
+							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{value.game_id}} // {{ value.main_rune }}
 						</div>
 						<div>
 							<button  onclick='itembar_0("{{ key }}")' id='{{ key }}_execute'> 
 								feel like ass
 							</button>
 						</div>
+					
 
 						<div id="{{ key }}_more" style="display: none">
 							<div style="display: none">
@@ -54,7 +78,7 @@
 									<input name="gameid" value="{{value.game_id}}">
 								</form>
 							</div>
-						</div>
+					 	</div>
 
 						<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 						<script>

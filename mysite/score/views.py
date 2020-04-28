@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from static_data import ddragon
-
 import requests, json
 dd = ddragon.ddragon() #Third party App
 
-api_key = 'RGAPI-ea965008-59c2-487e-925b-3b21085eae7d' #Type your API KEY here
+api_key = 'RGAPI-302fcfc0-1366-4692-b865-811dcd030f5c' #Type your API KEY here
  
 #League of Legends 전적검색
 def score_view(request):
@@ -58,7 +57,9 @@ def search_result(request):
 						break;
 						
 				detail = stat['stats']
-				kal_data[i]['game_id'] = game_id
+				kal_data[i]['game_id'] = game_id #{% static 'images/fdf.ico' %}
+				kal_data[i]['main_rune'] = "static '"+ str(detail['perk0']) + ".png'"
+				kal_data[i]['sub_rune'] = "{% static 'rune_img/" + str(detail['perkSubStyle']) + ".png' %}"
 				kal_data[i]['champid'] = str(dd.getChampion(stat['championId']).image)
 				kal_data[i]['spell_1'] = str(dd.getSummoner(stat['spell1Id']).image)
 				kal_data[i]['spell_2'] = str(dd.getSummoner(stat['spell2Id']).image)
