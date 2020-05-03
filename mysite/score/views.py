@@ -3,8 +3,30 @@ from django.views.decorators.csrf import csrf_exempt
 from static_data import ddragon
 import requests, json
 dd = ddragon.ddragon() #Third party App
+api_key = 'RGAPI-c89a8014-b033-4e9c-be43-f9c2579dc98a' #Type your API KEY here
 
-api_key = 'RGAPI-302fcfc0-1366-4692-b865-811dcd030f5c' #Type your API KEY here
+rune_dic = { 8100 : "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png", 
+8112 : "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png",
+8124 : "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Predator/Predator.png", 
+8128: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png",
+9923: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png", 
+8300: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png",
+8351: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/GlacialAugment/GlacialAugment.png",
+8360: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/UnsealedSpellbook/UnsealedSpellbook.png",
+8358: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MasterKey/MasterKey.png",
+8000: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png",
+8005: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png",
+8008: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png",
+8021: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png",
+8010: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png",
+8400: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png",
+8437: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png",
+8439: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/VeteranAftershock/VeteranAftershock.png",
+8465: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Guardian/Guardian.png",
+8200: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png",
+8214: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png",
+8229: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
+8230: "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/PhaseRush/PhaseRush.png"}
  
 #League of Legends 전적검색
 def score_view(request):
@@ -58,17 +80,18 @@ def search_result(request):
 						
 				detail = stat['stats']
 				kal_data[i]['game_id'] = game_id #{% static 'images/fdf.ico' %}
-				kal_data[i]['main_rune'] = "static '"+ str(detail['perk0']) + ".png'"
-				kal_data[i]['sub_rune'] = "{% static 'rune_img/" + str(detail['perkSubStyle']) + ".png' %}"
+				kal_data[i]['main_rune'] = rune_dic[detail['perk0']]
+				kal_data[i]['sub_rune'] = rune_dic[detail['perkSubStyle']]
 				kal_data[i]['champid'] = str(dd.getChampion(stat['championId']).image)
 				kal_data[i]['spell_1'] = str(dd.getSummoner(stat['spell1Id']).image)
 				kal_data[i]['spell_2'] = str(dd.getSummoner(stat['spell2Id']).image)
-				kal_data[i]['champ_lev'] = detail['champLevel']
 				kal_data[i]['kill'] = detail['kills']
 				kal_data[i]['death'] = detail['deaths']
 				kal_data[i]['assist'] = detail['assists']
+				kal_data[i]['kda'] = round((kal_data[i]['kill'] + kal_data[i]['assist']) / kal_data[i]['death'] , 2)
 				kal_data[i]['win'] = detail['win']
-				
+
+
 				
 		return render (request, 'score/search_result.html', {'sum_result': sum_result, 'kal_data' : kal_data});
 
@@ -86,31 +109,62 @@ def more(request):
 		game_json = game_tempt.json()
 		participant = game_json['participants']
 
-		more_data = {}  #Dictonary of more_data
+		red_data = {}  #Dictonary of more_data
+		blue_data = {}
 		i=0
 
-		for more in participant :
+		for more in participant[0:5] :
 			more_detail = more['stats']
 			list = {i:{'id' : more['participantId']}}
-			more_data.update(list)
-			more_data[i]['nick_name'] = game_json['participantIdentities'][i]['player']['summonerName']
-			more_data[i]['champid'] = str(dd.getChampion(more['championId']).image) 
-			more_data[i]['spell_1'] = str(dd.getSummoner(more['spell1Id']).image)
-			more_data[i]['spell_2'] = str(dd.getSummoner(more['spell2Id']).image)
-			more_data[i]['kill'] = more_detail['kills']
-			more_data[i]['death'] = more_detail['deaths']
-			more_data[i]['assist'] = more_detail['assists']
-			more_data[i]['main_rune'] = more_detail['perk0']
-			more_data[i]['sub_rune'] = more_detail['perkSubStyle']
+			red_data.update(list)
+			red_data[i]['nick_name'] = game_json['participantIdentities'][i]['player']['summonerName']
+			red_data[i]['champ_lev'] = more_detail['champLevel']
+			red_data[i]['champid'] = str(dd.getChampion(more['championId']).image) 
+			red_data[i]['spell_1'] = str(dd.getSummoner(more['spell1Id']).image)
+			red_data[i]['spell_2'] = str(dd.getSummoner(more['spell2Id']).image)
+			red_data[i]['kill'] = more_detail['kills']
+			red_data[i]['death'] = more_detail['deaths']
+			red_data[i]['assist'] = more_detail['assists']
+			red_data[i]['kda'] = round((red_data[i]['kill'] + red_data[i]['assist']) / red_data[i]['death'] , 2)
+			red_data[i]['main_rune'] = rune_dic[more_detail['perk0']]
+			red_data[i]['sub_rune'] = rune_dic[more_detail['perkSubStyle']]
+			#http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png
 			
 			for j in range(6):
 				tempt_item = 'item' + str(j)
-				more_data[i][j] = more_detail[tempt_item]
+				red_data[i][j] = "http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/"+ str(more_detail[tempt_item]) + ".png"
+
+			i = i + 1
+
+
+		for more in participant[5:] :
+			more_detail = more['stats']
+			list = {i:{'id' : more['participantId']}}
+			blue_data.update(list)
+			blue_data[i]['nick_name'] = game_json['participantIdentities'][i]['player']['summonerName']
+			blue_data[i]['champ_lev'] = more_detail['champLevel']
+			blue_data[i]['champid'] = str(dd.getChampion(more['championId']).image) 
+			blue_data[i]['spell_1'] = str(dd.getSummoner(more['spell1Id']).image)
+			blue_data[i]['spell_2'] = str(dd.getSummoner(more['spell2Id']).image)
+			blue_data[i]['kill'] = more_detail['kills']
+			blue_data[i]['death'] = more_detail['deaths']
+			blue_data[i]['assist'] = more_detail['assists']
+			blue_data[i]['kda'] = round((blue_data[i]['kill'] + blue_data[i]['assist']) / blue_data[i]['death'] , 2)
+			blue_data[i]['main_rune'] = rune_dic[more_detail['perk0']]
+			blue_data[i]['sub_rune'] = rune_dic[more_detail['perkSubStyle']]
+			#http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/1001.png
+			
+			for j in range(6):
+				tempt_item = 'item' + str(j)
+				blue_data[i][j] = "http://ddragon.leagueoflegends.com/cdn/10.9.1/img/item/"+ str(more_detail[tempt_item]) + ".png"
 
 			i = i + 1
 		
 
-		return render(request, 'score/more.html', {'a' : more_data});
+		return render(request, 'score/more.html', {'red' : red_data, 'blue' : blue_data});
+
+		
+		
 
 	else:
 		a = "False!"

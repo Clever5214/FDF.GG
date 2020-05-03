@@ -1,24 +1,108 @@
 <head>
+    <style>
+        .more_champ_img{
+            width: 40px;
+            height: 40px;
+
+        }
+        .item{
+            width: 30px;
+            height: 30px;
+
+        }
+        .nick_name{
+            font-size: 11px;
+        }
+        .lev{
+            font-size: 12px;
+            color: #fff;
+            background-color: rgba(0,0,0,.4);
+        }
+        .main_rune{
+            width: 20px;
+            height: 20px;
+        }
+        .sub_rune{
+            width: 15px;
+            height: 15px;
+        }
+    </style>
 </head>
 
 <body>
+    
 
-{% for key,value in a.items %}
-<div class='border grid grid-cols-20'>
-    <div id='champ_img'>
-        <img class="h-15 w-15 rounded" src="{{ value.champid }}">
+{% for key,value in red.items %}
+<div class='red flex bg-red-300'>
+    <div id='champ_img' class = 'flex'>
+        <img class="more_champ_img rounded" src="{{ value.champid }}">
+        <div class='mx-auto grid grid-cols-2'>
+            <div>
+                <img class="main_rune rounded mx-auto" src="{{value.spell_1}}">
+                <img class="main_rune rounded mx-auto" src="{{value.spell_2}}">
+            </div>
+            <div>
+                <img class="main_rune rounded mx-auto bg-gray-800" src="{{value.main_rune}}">
+                <img class="sub_rune rounded mx-auto" src="{{value.sub_rune}}">
+            </div>
+        </div>
     </div>
-    <div id='kda'>
-        {{ value.kill }}/{{ value.death }}/{{value.assist}} 
-    </div>
-    <div id='item'>
-        {{ value.0 }} / {{ value.1 }} / {{ value.2}} / {{ value.3 }} / {{ value.4 }} {{ value.5 }} {{ value.6 }}
-    </div>
-    <div id='rune'>
-        {{ value.main_rune }} {{ value.sub_rune }}
-    </div>
-    <div>
+    <span class='lev absolute'>
+        {{value.champ_lev}}
+    </span>
+    <div class='nick_name my-auto mx-auto col-span-2'>
         {{ value.nick_name }}
+    </div>
+    
+    <div id='kda' class='col-span-2 mx-auto'>
+        <div class='text-sm'>
+            {{ value.kda }}
+        </div> 
+        <div class='text-sm'>
+            {{ value.kill }}/{{ value.death }}/{{value.assist}}
+        </div>
+    </div>
+    <div class='flex col-span-4'>
+        <img class="more_champ_img rounded item" src="{{ value.0 }}">
+        <img class="more_champ_img rounded item" src="{{ value.1 }}">
+        <img class="more_champ_img rounded item" src="{{ value.2 }}">
+        <img class="more_champ_img rounded item" src="{{ value.3 }}">
+        <img class="more_champ_img rounded item" src="{{ value.4 }}">
+        <img class="more_champ_img rounded item" src="{{ value.5 }}">
+        <img class="more_champ_img rounded item" src="{{ value.6 }}">
+    </div>
+</div>
+
+{% endfor %}
+
+{% for key,value in blue.items %}
+<div class='blue flex flex-wrap justify-end bg-blue-300'>
+    
+    <div class='grid grid-cols-7'>
+        <img class="more_champ_img rounded item" src="{{ value.0 }}">
+        <img class="more_champ_img rounded item" src="{{ value.1 }}">
+        <img class="more_champ_img rounded item" src="{{ value.2 }}">
+        <img class="more_champ_img rounded item" src="{{ value.3 }}">
+        <img class="more_champ_img rounded item" src="{{ value.4 }}">
+        <img class="more_champ_img rounded item" src="{{ value.5 }}">
+        <img class="more_champ_img rounded item" src="{{ value.6 }}">
+    </div>
+    <div id='kda' class='mx-auto'>
+        {{ value.kda }} <br>{{ value.kill }}/{{ value.death }}/{{value.assist}} 
+    </div>
+    <div class='mx-auto'>
+        <img class="main_rune rounded" src="{{value.main_rune}}">
+        <img class="sub_rune rounded" src="{{value.sub_rune}}">
+    </div>
+    <div class='nick_name my-auto'>
+        {{ value.nick_name }}
+    </div>
+    <span class='lev absolute'>
+        {{value.champ_lev}} 
+    </span>
+
+    <div id='champ_img'>
+        <img class="more_champ_img rounded" src="{{ value.champid }}">
     </div>
 </div>
 

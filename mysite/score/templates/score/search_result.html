@@ -18,6 +18,10 @@
 			width: 40px;
 			height: 40px;
 		}
+		.sub-rune{
+			width: 25px;
+			height: 25px;
+		}
 	</style>
 
 </head>
@@ -45,25 +49,26 @@
 			<div class="col-span-2 w">
 				<div class="container p-6">
 					{% for key,value in kal_data.items %}
-					<div id="{{ key }}_main" class="score_main border-4 rounded-lg grid grid-cols-4">
+					<div id="{{ key }}_main" class="score_main border-4 rounded-lg flex flex-wrap">
 						<div class="grid grid-cols-2">
 							<img class="champ_img rounded-lg" src="{{ value.champid }}">
 							<div class="grid grid-cols-2">
 								<div>
-									<img class="h-10 w-10 rounded" src="{{ value.spell_1}}">
-									<img class="h-10 w-10 rounded" src="{{ value.spell_2}}">
+									<img class="spell rounded" src="{{ value.spell_1}}">
+									<img class="spell rounded" src="{{ value.spell_2}}">
 								</div> 
 								<div>
-									<img class="h-10 w-10 rounded" src="">
-									<img class="h-10 w-10 rounded" src="{{ value.sub_rune }}">
+									{% load staticfiles %}
+									<img class="h-10 w-10 rounded-lg bg-gray-900 bg-opacity-75" src="{{value.main_rune}}">
+									<img class="sub-rune mx-auto rounded" src="{{ value.sub_rune }}">
 								</div>
 							</div>
 						</div>
 						<div>
 							
 						</div>
-						<div class="my-auto font-bold">
-							{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{value.game_id}} // {{ value.main_rune }}
+						<div class="my-auto font-bold mx-auto">
+							{{ value.kda }} <br>{{ value.kill }} / {{ value.death }} / {{ value.assist }} //{{value.game_id}}
 						</div>
 						<div>
 							<button  onclick='itembar_0("{{ key }}")' id='{{ key }}_execute'> 
@@ -72,7 +77,7 @@
 						</div>
 					
 
-						<div id="{{ key }}_more" style="display: none">
+						<div id="{{ key }}_more" style="display: none" class="score_main">
 							<div style="display: none">
 								<form id="{{ key }}_id">
 									<input name="gameid" value="{{value.game_id}}">
@@ -134,7 +139,7 @@
 					</div>
 
 					{% endfor %}
-
+					<button> ass</button>
 				</div>
 
 			</div>
